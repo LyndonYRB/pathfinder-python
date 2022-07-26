@@ -2,13 +2,13 @@ from tkinter import messagebox, Tk
 import pygame
 import sys
 
-window_width = 500
-window_height = 500
+window_width = 300
+window_height = 300
 
 window = pygame.display.set_mode((window_width, window_height))
 
-columns = 50
-rows = 50
+columns = 25
+rows = 25
 
 box_width = window_width // columns
 box_height = window_height // rows
@@ -44,6 +44,8 @@ def main():
     begin_search = False
     target_box_set = False
 
+    target_box = None
+
     while True:
         for event in pygame.event.get():
           # quit
@@ -59,13 +61,13 @@ def main():
                     i = x // box_width
                     j = y // box_height
                     grid[i][j].wall = True
-                    # set target
-                    if event.buttons[2] and not target_box_set:
-                        i = x // box_width
-                        j = y // box_height
-                        target_box = grid[i][j]
-                        target_box.target = True
-                        target_box_set = True
+                # set target
+                if event.buttons[2] and not target_box_set:
+                    i = x // box_width
+                    j = y // box_height
+                    target_box = grid[i][j]
+                    target_box.target = True
+                    target_box_set = True
             # start algorithm
             if event.type == pygame.KEYDOWN and target_box_set:
                 begin_search = True
