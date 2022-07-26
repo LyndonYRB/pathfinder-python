@@ -1,4 +1,3 @@
-import queue
 from tkinter import messagebox, Tk
 import pygame
 import sys
