@@ -16,6 +16,7 @@ box_height = window_height // rows
 
 grid = []
 queue = []
+path = []
 
 
 class Box:
@@ -28,6 +29,7 @@ class Box:
         self.queued = False
         self.visited = False
         self.neighbors = []
+        self.prior = None
 
     def draw(self, win, color):
         pygame.draw.rect(win, color, (self.x * box_width,
@@ -100,10 +102,14 @@ def main():
                 current_box.visited = True
                 if current_box == target_box:
                     searching = False
+                    while current_box.prior != start_box:
+                        path.append(current_box.prior)
+                        current_box = current_box.prior
                 else:
                     for neighbor in current_box.neighbors:
                         if not neighbor.queued and not neighbor.wall:
                             neighbor.queued = True
+                            neighbor.prior = current_box
                             queue.append(neighbor)
             else:
                 if searching:
@@ -122,6 +128,8 @@ def main():
                     box.draw(window, (200, 0, 0))
                 if box.visited:
                     box.draw(window, (0, 200, 0))
+                if box in path:
+                    box.draw(window, (0, 0, 200))
 
                 if box.start:
                     box.draw(window, (0, 200, 200))
