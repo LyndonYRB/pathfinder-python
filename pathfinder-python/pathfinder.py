@@ -1,9 +1,10 @@
+import queue
 from tkinter import messagebox, Tk
 import pygame
 import sys
 
-window_width = 300
-window_height = 300
+window_width = 500
+window_height = 500
 
 window = pygame.display.set_mode((window_width, window_height))
 
@@ -14,6 +15,7 @@ box_width = window_width // columns
 box_height = window_height // rows
 
 grid = []
+queue = []
 
 
 class Box:
@@ -23,10 +25,23 @@ class Box:
         self.start = False
         self.wall = False
         self.target = False
+        self.queued = False
+        self.visited = False
+        self.neighbors = []
 
     def draw(self, win, color):
         pygame.draw.rect(win, color, (self.x * box_width,
                          self.y * box_height, box_width-2, box_height-2))
+
+    def set_neighbors(self):
+        if self.x > 0:
+            self.neighbors.append(grid[self.x - 1][self.y])
+        if self.x < columns - 1:
+            self.neighbors.append(grid[self.x + 1][self.y])
+        if self.y > 0:
+            self.neighbors.append(grid[self.x][self.y - 1])
+        if self.y < rows - 1:
+            self.neighbors.append(grid[self.x][self.y + 1])
 
 
 # create grid
@@ -36,14 +51,21 @@ for i in range(columns):
         arr.append(Box(i, j))
     grid.append(arr)
 
+# set neighbors
+for i in range(columns):
+    for j in range(rows):
+        grid[i][j].set_neighbors()
+
 start_box = grid[0][0]
 start_box.start = True
+start_box.visited = True
+queue.append(start_box)
 
 
 def main():
     begin_search = False
     target_box_set = False
-
+    searching = True
     target_box = None
 
     while True:
@@ -72,12 +94,35 @@ def main():
             if event.type == pygame.KEYDOWN and target_box_set:
                 begin_search = True
 
+        if begin_search:
+            if len(queue) > 0 and searching:
+                current_box = queue.pop(0)
+                current_box.visited = True
+                if current_box == target_box:
+                    searching = False
+                else:
+                    for neighbor in current_box.neighbors:
+                        if not neighbor.queued and not neighbor.wall:
+                            neighbor.queued = True
+                            queue.append(neighbor)
+            else:
+                if searching:
+                    Tk().wm_withdraw()
+                    messagebox.showinfo("No solution", "There is a problem")
+                    searching = False
+
         window.fill((0, 0, 0))
 
         for i in range(columns):
             for j in range(rows):
                 box = grid[i][j]
                 box.draw(window, (50, 50, 50))
+
+                if box.queued:
+                    box.draw(window, (200, 0, 0))
+                if box.visited:
+                    box.draw(window, (0, 200, 0))
+
                 if box.start:
                     box.draw(window, (0, 200, 200))
                 if box.wall:
