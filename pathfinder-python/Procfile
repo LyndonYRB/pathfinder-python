@@ -1,0 +1,2 @@
+web: python pathfiner-python.py
+worker: python pathfiner-python.py 
