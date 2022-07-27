@@ -2,31 +2,15 @@
 
 I made it from a tutorial I found on youtube.
 
-### How to play
+### How to run
 
-- Hold the right-click button on the mouse anywhere on the grid to select a target box (yellow)
-
-- Use left click to draw the wall (light gray)
-
-- Press any key to start the algorithm to reach the target box. Green means that the box has been checked by the algo, red means
-
-### How to play
-
-- Hold the right-click button on the mouse anywhere on the grid to select a target box (yellow)
-
-- Use left click to draw the wall (light gray)
-
-- Press any key to start the algorithm to reach the target box. Green means that the box has been checked by the algo, red means
-
-## Required
-
-pygame==2.1.2
+You need to clone this repository and run the code on your device and the install pygame.
 
 ```jsx
 pip install pygame
 ```
 
-## How to run
+To start the app
 
 ```jsx
 python3 pathfinder.py
@@ -38,6 +22,16 @@ or
 python pathfinder.py
 ```
 
-## Deployment
+- Hold the right-click button on the mouse anywhere on the grid to select a target box (yellow)
 
-Heroku
+- Use left click to draw the wall (light gray)
+
+- Press any key to start the algorithm to reach the target box. Green means that the box has been checked by the algo, red means
+
+## Requirements
+
+pygame==2.1.2
+
+```jsx
+pip install pygame
+```
