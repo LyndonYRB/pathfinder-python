@@ -1,6 +1,6 @@
 # Pathfinder (made with Python)
 
-I made it from a tutorial I found on youtube. 
+I made it from a tutorial I found on youtube.
 
 ### How to play
 
@@ -8,7 +8,7 @@ I made it from a tutorial I found on youtube.
 
 - Use left click to draw the wall (light gray)
 
-- Press any key to start the algorithm to reach the target box. Green means that the box has been checked by the algo, red means 
+- Press any key to start the algorithm to reach the target box. Green means that the box has been checked by the algo, red means
 
 ### How to play
 
@@ -37,3 +37,7 @@ or
 ```jsx
 python pathfinder.py
 ```
+
+## Deployment
+
+Heroku
